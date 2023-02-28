@@ -1,58 +1,69 @@
-class Calculator {
-  constructor(previousOperandTextElement, currentOperandTextElement) {
-    this.previousOperandTextElement = previousOperandTextElement;
-    this.currentOperandTextElement = currentOperandTextElement;
-    this.clear();
-  }
+let operator = "";
+let previousValue = "";
+let currentValue = "";
 
-  clear() {
-    this.currentOperand = "";
-    this.previousOperand = "";
-    this.operation = undefined;
-  }
+let clear = document.querySelector(".clear");
+let equal = document.querySelector(".equal");
+let decimal = document.querySelector(".decimal");
 
-  delete() {}
+let numbers = document.querySelectorAll(".number");
+let operators = document.querySelectorAll(".operation");
 
-  appendNumber(number) {
-    if (number === "." && this.currentOperand.includes(".")) return;
-    this.currentOperand = this.currentOperand.toString() + number.toString();
-  }
+let previousScreen = document.querySelector(".previous");
+let currentScreen = document.querySelector(".current");
 
-  chooseOperation(operation) {
-    this.operation = operation;
-    this.previousOperand = this.currentOperand;
-  }
-
-  compute() {}
-
-  updateDisplay() {
-    this.currentOperandTextElement.innerText = this.currentOperand;
-  }
-}
-
-const numberButtons = document.querySelectorAll("[data-number]");
-const operationButtons = document.querySelectorAll("[data-operation]");
-const equalsButtons = document.querySelector("[data-equals]");
-const allClearButtons = document.querySelector("[data-allclear]");
-const deleteButtons = document.querySelector("[data-delete]");
-const previousOperandTextElement = document.querySelector("[data-previous]");
-const currentOperandTextElement = document.querySelector("[data-current]");
-
-const calculator = new Calculator(
-  previousOperandTextElement,
-  currentOperandTextElement
+numbers.forEach((number) =>
+  number.addEventListener("click", function (e) {
+    handleNumber(e.target.textContent);
+    currentScreen.textContent = currentValue;
+  })
 );
 
-numberButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    calculator.appendNumber(button.innerText);
-    calculator.updateDisplay();
-  });
+operators.forEach((op) =>
+  op.addEventListener("click", function (e) {
+    handleOperator(e.target.textContent);
+    previousScreen.textContent = previousValue + " " + operator;
+    currentScreen.textContent = currentValue;
+  })
+);
+
+equal.addEventListener("click", function () {
+  previousScreen.textContent = previousValue + " " + operator + currentValue;
+  calculate();
+  currentScreen.textContent = previousValue;
 });
 
-operationButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    calculator.chooseOperation(button.innerText);
-    calculator.updateDisplay();
-  });
+clear.addEventListener("click", function () {
+  operator = "";
+  previousValue = "";
+  currentValue = "";
+  previousScreen.textContent = currentValue;
+  currentScreen.textContent = currentValue;
 });
+
+function handleNumber(num) {
+  currentValue += num;
+}
+
+function handleOperator(op) {
+  operator = op;
+  previousValue = currentValue;
+  currentValue = "";
+}
+
+function calculate() {
+  previousValue = Number(previousValue);
+  currentValue = Number(currentValue);
+
+  if (operator === "+") {
+    previousValue += currentValue;
+  } else if (operator === "-") {
+    previousValue -= currentValue;
+  } else if (operator === "x") {
+    previousValue *= currentValue;
+  } else {
+    previousValue /= currentValue;
+  }
+
+  console.log(previousValue);
+}
