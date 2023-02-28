@@ -31,10 +31,10 @@ body {
     background-color: rgba(255, 255, 255, 0.80);
 }
 
-.span_column_two {
+#span_column_two {
     grid-column: 1 / 3;
 }
-.span_row_two {
+#span_row_two {
     grid-row: span 2;
 }
 
