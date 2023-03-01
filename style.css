@@ -22,13 +22,18 @@ body {
 .calculator_grid button {
     cursor: pointer;
     font-size: 2rem;
-    border: 1px solid white;
-    outline: none;
-    background-color: rgba(255, 255, 255, 0.30);
+    border: 1px solid rgb(255, 255, 255);
+    background-color: rgba(255, 255, 255, 0.226);
+    transform: translateY(-0.1em);
 }
 
 .calculator_grid button:hover {
-    background-color: rgba(255, 255, 255, 0.80);
+    background-color: rgba(255, 255, 255, 0.733);
+}
+
+.calculator_grid button:active {
+    transform: translateY(0);
+    box-shadow: 0.05em 0.05em;
 }
 
 #span_column_two {
@@ -49,6 +54,7 @@ body {
     padding: 10px;
     word-wrap: break-word;
     word-break: break-all;
+    transform: translateY(-0.2em);
 }
 
 .output .previous {
