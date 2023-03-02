@@ -65,7 +65,10 @@ function handleOperator(op) {
 }
 
 function addDecimal() {
-  if (!currentValue.includes(".")) {
+  if (currentValue === "") {
+    currentValue = "0.";
+  } else {
+    !currentValue.includes(".");
     currentValue += ".";
   }
 }
@@ -78,6 +81,7 @@ function undo() {
   ) {
     return;
   } else {
+    currentValue = currentValue.slice(0, -1);
     currentScreen.textContent = currentScreen.textContent.slice(0, -1);
   }
 }
